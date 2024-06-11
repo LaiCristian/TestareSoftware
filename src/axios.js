@@ -36,8 +36,6 @@ axiosInstance.interceptors.response.use(response => {
 });
 
 async function refreshAuthToken() {
-    // Implement your token refresh logic here
-    // For example, you could make a request to your refresh token endpoint
     const response = await axios.post('http://localhost:8080/refresh-token', {
         refreshToken: localStorage.getItem('refreshToken')
     });
