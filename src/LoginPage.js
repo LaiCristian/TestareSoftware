@@ -3,7 +3,7 @@ import React, { useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import './App.css';
 import users from "./DataBase";
-import { axiosInstance } from './axios';
+import axiosInstance from "./axios";
 
 const LoginPage = () => {
   const [errorMsg, setErrorMsg] = useState('');
@@ -29,7 +29,7 @@ const LoginPage = () => {
     const { username, password } = formData;
 
     try {
-      const response = await axiosInstance.post('auth/login', {username, password})
+      const response = await axiosInstance.post('auth/login', {name:username, password})
       if (response.data.status !== 201) setErrorMsg("Invalid credentials");
       if (response.data.token) {
         localStorage.setItem('token', response.data.token)
