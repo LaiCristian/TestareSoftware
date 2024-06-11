@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './App.css';
-import { axiosInstance } from './axios';
+import axiosInstance from "./axios";
 
 const CharCreation = () => {
   const navigate = useNavigate();
