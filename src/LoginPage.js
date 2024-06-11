@@ -29,7 +29,7 @@ const LoginPage = () => {
     const { username, password } = formData;
 
     try {
-      const response = await axiosInstance.post('auth/login', {username, password})
+      const response = await axiosInstance.post('auth/login', {name:username, password})
       if (response.data.status !== 201) setErrorMsg("Invalid credentials");
       if (response.data.token) {
         localStorage.setItem('token', response.data.token)
