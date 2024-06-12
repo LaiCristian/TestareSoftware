@@ -30,12 +30,11 @@ const LoginPage = () => {
 
     try {
       const response = await axiosInstance.post('auth/login', {name:username, password})
-      if (response.data.status !== 201) setErrorMsg("Invalid credentials");
+      
       if (response.data.token) {
         localStorage.setItem('token', response.data.token)
         sessionStorage.setItem('username', response.data.username)
         const characters = await axiosInstance.get('character')
-        console.log(characters.data)
 
       if(characters.data.length!==0){
         const charactersSession = [
@@ -80,6 +79,7 @@ const LoginPage = () => {
       }
     } catch (e) {
       console.log(e);
+      setErrorMsg("Invalid credentials");
     }
 
     

@@ -45,7 +45,6 @@ const RegisterPage = () => {
 
       try {
         const response = await axiosInstance.post('auth/register', {username, password})
-        if (response.data.status !== 201) setErrorMsg("User already exist");
         if (response.data.token) {
           localStorage.setItem('token', response.data.token)
           sessionStorage.setItem('username', response.data.username)
@@ -57,6 +56,7 @@ const RegisterPage = () => {
         }
       } catch (e) {
         console.log(e);
+        setErrorMsg("User already exist");
       }
     }
   };
