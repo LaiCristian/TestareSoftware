@@ -2,12 +2,58 @@ import React, { useState, useEffect } from 'react';
 import './App.css';
 //import ExitGame from './ExitGame';
 import { useNavigate } from 'react-router-dom';
+import axiosInstance from "./axios";
 
 const Campaign = () => {
   const [spinValue, setSpinValue] = useState(0);
+  const [needSpin, setNeedSpin] = useState(0);
+  const [story, setStory] = useState('');
+  const [storyStage, setStoryStage] = useState(1);
+  const [storyID, setStoryID] = useState(null);
+  const [rollOrNext, setrollOrNext] = useState('Next');
   const navigate = useNavigate();
 
+  useEffect(() => {
+    const fetchStartData = async () => {
+      try {
+        const response = await axiosInstance.get('game/start', {});
+        setStory(response.data);
+        setNeedSpin(response.data.needRoll);
+        // while (true) {
+        //   console.log('Loop iteration');
+          
+        //   myVariable--;
+        
+        //   if (myVariable <= 0) {
+        //     console.log('Breaking the loop');
+        //     break;
+        //   }
+        // }
+        if(response.data.needRoll == 0){
+          setrollOrNext("Next")
+        }else{
+          setrollOrNext("Roll")
+        }
+      } catch (error) {
+        console.error('There was a problem with the fetch operation:', error);
+      }
+    };
+
+    fetchStartData();
+  }, []);
+
+  console.log(story);
+
+  const continueGame = () =>{
+    if(needSpin == 0){
+      
+    }else{
+      setrollOrNext("Roll")
+    }
+  }
+
   const storedCharacters = JSON.parse(sessionStorage.getItem('characters'));
+  console.log(storedCharacters)
 
   function spinWheel() {
     const newValue = Math.floor(Math.random() * 20);
@@ -56,11 +102,11 @@ const Campaign = () => {
               </div>
               <div className='char_and_stat_camp'>
                 <div className="icon ic5" id="icon7"></div>
-                <p className='slideNr' id='smallTxt7'>{storedCharacters[0].inteligence}</p>
+                <p className='slideNr' id='smallTxt7'>{storedCharacters[0].intelligence}</p>
               </div>
               <div className='char_and_stat_camp'>
                 <div className="icon ic5" id="icon8"></div>
-                <p className='slideNr' id='smallTxt8'>15</p>
+                <p className='slideNr' id='smallTxt8'>{storedCharacters[0].health}</p>
               </div>
             </div>
           </div>
@@ -77,11 +123,11 @@ const Campaign = () => {
               </div>
               <div className='char_and_stat_camp'>
                 <div className="icon ic5" id="icon7"></div>
-                <p className='slideNr' id='smallTxt7'>{storedCharacters[1].inteligence}</p>
+                <p className='slideNr' id='smallTxt7'>{storedCharacters[1].intelligence}</p>
               </div>
               <div className='char_and_stat_camp'>
                 <div className="icon ic5" id="icon8"></div>
-                <p className='slideNr' id='smallTxt8'>15</p>
+                <p className='slideNr' id='smallTxt8'>{storedCharacters[1].health}</p>
               </div>
             </div>
           </div>
@@ -98,11 +144,11 @@ const Campaign = () => {
               </div>
               <div className='char_and_stat_camp'>
                 <div className="icon ic5" id="icon7"></div>
-                <p className='slideNr' id='smallTxt7'>{storedCharacters[2].inteligence}</p>
+                <p className='slideNr' id='smallTxt7'>{storedCharacters[2].intelligence}</p>
               </div>
               <div className='char_and_stat_camp'>
                 <div className="icon ic5" id="icon8"></div>
-                <p className='slideNr' id='smallTxt8'>15</p>
+                <p className='slideNr' id='smallTxt8'>{storedCharacters[2].health}</p>
               </div>
             </div>
           </div>
@@ -111,16 +157,15 @@ const Campaign = () => {
         <div className='TAngle'></div>
       </div>
       <div className='story'>
-        <div className='story_text'>You are attacked, try to avoid the problem or go and fight! You need 10 strength</div>
+        <div className='story_text'>{story.mainText ? story.mainText : ''}</div>
         <div className='divinline'>
-          <button className="button" id="option1" >Fight</button>
-          <button className="button" id="option2" >Run</button>
+          <button className="button" id="option1" onClick={continueGame}>{rollOrNext}</button>
         </div>
       </div>
       <div className='botRama_cont'>
         <div className='BRleft'></div>
         <div className='BRright'>
-          <p className='title' id='smallerTxt'> STAGE: 1</p>
+          <p className='title' id='smallerTxt'> STAGE: {storyStage}</p>
           <button className='mainButton glow' onClick={addExitWind}>QUIT GAME</button>
         </div>
         <div className='BAngle'></div>

@@ -37,11 +37,11 @@ const HeroesShow = () => {
                 </div>
                 <div>
                   <div className="icon" id="icon7"></div>
-                  <p className='slideNr' id='smallTxt3'>{storedCharacters[0].inteligence}</p>
+                  <p className='slideNr' id='smallTxt3'>{storedCharacters[0].intelligence}</p>
                 </div>
                 <div>
                   <div className="icon" id="icon8"></div>
-                  <p className='slideNr' id='smallTxt4'>15</p>
+                  <p className='slideNr' id='smallTxt4'>{storedCharacters[0].health}</p>
                 </div>
               </div>
             </div>
@@ -59,11 +59,11 @@ const HeroesShow = () => {
                 </div>
                 <div>
                   <div className="icon" id="icon7"></div>
-                  <p className='slideNr' id='smallTxt3'>{storedCharacters[1].inteligence}</p>
+                  <p className='slideNr' id='smallTxt3'>{storedCharacters[1].intelligence}</p>
                 </div>
                 <div>
                   <div className="icon" id="icon8"></div>
-                  <p className='slideNr' id='smallTxt4'>15</p>
+                  <p className='slideNr' id='smallTxt4'>{storedCharacters[1].health}</p>
                 </div>
               </div>
             </div>
@@ -81,11 +81,11 @@ const HeroesShow = () => {
                 </div>
                 <div>
                   <div className="icon" id="icon7"></div>
-                  <p className='slideNr' id='smallTxt3'>{storedCharacters[2].inteligence}</p>
+                  <p className='slideNr' id='smallTxt3'>{storedCharacters[2].intelligence}</p>
                 </div>
                 <div>
                   <div className="icon" id="icon8"></div>
-                  <p className='slideNr' id='smallTxt4'>15</p>
+                  <p className='slideNr' id='smallTxt4'>{storedCharacters[2].health}</p>
                 </div>
               </div>
             </div>

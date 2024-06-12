@@ -35,7 +35,45 @@ const LoginPage = () => {
         localStorage.setItem('token', response.data.token)
         sessionStorage.setItem('username', response.data.username)
         const characters = await axiosInstance.get('character')
-        console.log(characters)
+        console.log(characters.data)
+
+      if(characters.data.length!==0){
+        const charactersSession = [
+          {
+              name: characters.data[characters.data.length - 3].name,
+              health: characters.data[characters.data.length - 3].health,
+              strength: characters.data[characters.data.length - 3].damage,
+              agility: characters.data[characters.data.length - 3].agility,
+              intelligence: characters.data[characters.data.length - 3].intelligence,
+              image: characters.data[characters.data.length - 3].image
+          },
+          {
+              name: characters.data[characters.data.length - 2].name,
+              health: characters.data[characters.data.length - 2].health,
+              strength: characters.data[characters.data.length - 2].damage,
+              agility: characters.data[characters.data.length - 2].agility,
+              intelligence: characters.data[characters.data.length - 2].intelligence,
+              image: characters.data[characters.data.length - 2].image
+          },
+          {
+              name: characters.data[characters.data.length - 1].name,
+              health: characters.data[characters.data.length - 1].health,
+              strength: characters.data[characters.data.length - 1].damage,
+              agility: characters.data[characters.data.length - 1].agility,
+              intelligence: characters.data[characters.data.length - 1].intelligence,
+              image: characters.data[characters.data.length - 1].image
+          }
+      ];
+
+      sessionStorage.setItem('characters', JSON.stringify(charactersSession));
+      console.log(JSON.stringify(charactersSession))
+      console.log("SESION FULL")
+    }else{
+      if (sessionStorage.getItem('characters')) {
+        sessionStorage.removeItem('characters');}
+        console.log("SESION EMPTY")
+    }
+
         navigate("/home")
       } else {
         setErrorMsg("Invalid credentials");

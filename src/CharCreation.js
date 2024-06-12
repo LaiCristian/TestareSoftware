@@ -15,6 +15,10 @@ const CharCreation = () => {
   const [slide1, setSlide1] = useState(10);
   const [slide2, setSlide2] = useState(10);
   const [slide3, setSlide3] = useState(10);
+
+  const [health1, sethealth1] = useState(100);
+  const [health2, sethealth2] = useState(100);
+  const [health3, sethealth3] = useState(100);
   //////////////////////////////////////////////
   const [slider1, setSlider1] = useState(10);
   const [slider2, setSlider2] = useState(10);
@@ -242,33 +246,37 @@ const CharCreation = () => {
       const characters = [
         {
             name: name1,
+            health: health1, 
             strength: slider1,
             agility: slider2,
-            inteligence: slider3,
+            intelligence: slider3,
             image: chImage1
         },
         {
             name: name2,
+            health: health2,
             strength: slider4,
             agility: slider5,
-            inteligence: slider6,
+            intelligence: slider6,
             image: chImage2
         },
         {
             name: name3,
+            health: health3,
             strength: slider7,
             agility: slider8,
-            inteligence: slider9,
+            intelligence: slider9,
             image: chImage3
         }
     ];
 
     characters.map(async (item) => {
-      await axiosInstance.post('character/create', {name: item.name, image: item.image, damage: item.strength, agility: item.agility, inteligence:item.inteligence})
+      await axiosInstance.post('character/create', {name: item.name, image: item.image, damage: item.strength, agility: item.agility, intelligence:item.intelligence, health:item.health})
     })
     
     // Store the characters array as a JSON string
     sessionStorage.setItem('characters', JSON.stringify(characters));
+    console.log(JSON.stringify(characters))
     }else{
       console.log("No Save")
       setSaveState(0)
@@ -382,7 +390,7 @@ const CharCreation = () => {
               </div>
               <div>
                 <div className="icon" id="icon8"></div>
-                <p className='slideNr' id='smallTxt4'>15</p>
+                <p className='slideNr' id='smallTxt4'>{health1}</p>
               </div>
             </div>
           </div>
@@ -404,7 +412,7 @@ const CharCreation = () => {
               </div>
               <div>
                 <div className="icon" id="icon8"></div>
-                <p className='slideNr' id='smallTxt4'>15</p>
+                <p className='slideNr' id='smallTxt4'>{health2}</p>
               </div>
             </div>
           </div>
@@ -426,7 +434,7 @@ const CharCreation = () => {
               </div>
               <div>
                 <div className="icon" id="icon8"></div>
-                <p className='slideNr' id='smallTxt4'>15</p>
+                <p className='slideNr' id='smallTxt4'>{health3}</p>
               </div>
             </div>
           </div>

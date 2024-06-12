@@ -49,6 +49,8 @@ const RegisterPage = () => {
         if (response.data.token) {
           localStorage.setItem('token', response.data.token)
           sessionStorage.setItem('username', response.data.username)
+          if (sessionStorage.getItem('characters')) {
+              sessionStorage.removeItem('characters');}
           navigate("/home")
         } else {
           setErrorMsg("Invalid credentials");
