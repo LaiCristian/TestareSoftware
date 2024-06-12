@@ -247,25 +247,25 @@ const CharCreation = () => {
         {
             name: name1,
             health: health1, 
-            strength: slider1,
-            agility: slider2,
-            intelligence: slider3,
+            strength: parseInt(slider1),
+            agility: parseInt(slider2),
+            intelligence: parseInt(slider3),
             image: chImage1
         },
         {
             name: name2,
             health: health2,
-            strength: slider4,
-            agility: slider5,
-            intelligence: slider6,
+            strength: parseInt(slider4),
+            agility: parseInt(slider5),
+            intelligence: parseInt(slider6),
             image: chImage2
         },
         {
             name: name3,
             health: health3,
-            strength: slider7,
-            agility: slider8,
-            intelligence: slider9,
+            strength: parseInt(slider7),
+            agility: parseInt(slider8),
+            intelligence: parseInt(slider9),
             image: chImage3
         }
     ];

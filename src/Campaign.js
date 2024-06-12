@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react';
 import './App.css';
 //import ExitGame from './ExitGame';
@@ -5,6 +6,13 @@ import { useNavigate } from 'react-router-dom';
 import axiosInstance from "./axios";
 
 const Campaign = () => {
+  const storedCharacters = JSON.parse(sessionStorage.getItem('characters'));
+  //console.log(storedCharacters)
+
+  const [health1, sethealth1] = useState(storedCharacters[0].health);
+  const [health2, sethealth2] = useState(storedCharacters[1].health);
+  const [health3, sethealth3] = useState(storedCharacters[2].health);
+  
   const [spinValue, setSpinValue] = useState(0);
   const [needSpin, setNeedSpin] = useState(0);
   const [story, setStory] = useState('');
@@ -13,27 +21,26 @@ const Campaign = () => {
   const [rollOrNext, setrollOrNext] = useState('Next');
   const navigate = useNavigate();
 
+  const continueGame = () =>{
+    if(needSpin === 0){
+      
+    }else{
+      setrollOrNext("Roll")
+    }
+  }
+
   useEffect(() => {
     const fetchStartData = async () => {
       try {
         const response = await axiosInstance.get('game/start', {});
         setStory(response.data);
         setNeedSpin(response.data.needRoll);
-        // while (true) {
-        //   console.log('Loop iteration');
-          
-        //   myVariable--;
-        
-        //   if (myVariable <= 0) {
-        //     console.log('Breaking the loop');
-        //     break;
-        //   }
+        continueGame();
+        // if(response.data.needRoll == 0){
+        //   setrollOrNext("Next")
+        // }else{
+        //   setrollOrNext("Roll")
         // }
-        if(response.data.needRoll == 0){
-          setrollOrNext("Next")
-        }else{
-          setrollOrNext("Roll")
-        }
       } catch (error) {
         console.error('There was a problem with the fetch operation:', error);
       }
@@ -42,18 +49,7 @@ const Campaign = () => {
     fetchStartData();
   }, []);
 
-  console.log(story);
-
-  const continueGame = () =>{
-    if(needSpin == 0){
-      
-    }else{
-      setrollOrNext("Roll")
-    }
-  }
-
-  const storedCharacters = JSON.parse(sessionStorage.getItem('characters'));
-  console.log(storedCharacters)
+  //console.log(story);
 
   function spinWheel() {
     const newValue = Math.floor(Math.random() * 20);

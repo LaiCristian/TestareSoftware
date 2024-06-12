@@ -583,14 +583,14 @@ position: relative;
 }
 
 #showIMG1{background-image: url("/public/Img/archer1.jpeg");  background-size: 100% 100%;}
-#showIMG2{background-image: url("/public/Img/archer2.jpeg");  background-size: 100% 100%;}
-#showIMG3{background-image: url("/public/Img/archer3.jpeg");  background-size: 100% 100%;}
+#showIMG2{background-image: url("/public/Img/archer2.png");  background-size: 100% 100%;}
+#showIMG3{background-image: url("/public/Img/archer3.png");  background-size: 100% 100%;}
 #showIMG4{background-image: url("/public/Img/cleric1.jpeg");  background-size: 100% 100%;}
 #showIMG5{background-image: url("/public/Img/cleric2.jpeg");  background-size: 100% 100%;}
 #showIMG6{background-image: url("/public/Img/cleric3.jpeg");  background-size: 100% 100%;}
 #showIMG7{background-image: url("/public/Img/knight1.jpeg");  background-size: 100% 100%;}
 #showIMG8{background-image: url("/public/Img/knight2.jpeg");  background-size: 100% 100%;}
-#showIMG9{background-image: url("/public/Img/knight3.jpeg");  background-size: 100% 100%;}
+#showIMG9{background-image: url("/public/Img/knight3.jpg");  background-size: 100% 100%;}
 #showIMG10{background-image: url("/public/Img/wizard1.jpeg");  background-size: 100% 100%;}
 #showIMG11{background-image: url("/public/Img/wizard2.jpeg");  background-size: 100% 100%;}
 #showIMG12{background-image: url("/public/Img/wizard3.jpeg");  background-size: 100% 100%;}
