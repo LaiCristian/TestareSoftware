@@ -21,37 +21,43 @@ const Campaign = () => {
   const [rollOrNext, setrollOrNext] = useState('Next');
   const navigate = useNavigate();
 
-  const continueGame = async () =>{
-    //console.log(needSpin)
-    if(needSpin === 0){
+  const continueGame = async () => {
+    let newStoryID = 0;
+    if (needSpin === 0) {
       try {
-        const stoorr = '66668392345bd12538db9c9b'
-        const response = await axiosInstance.get('game/next', {id: stoorr});
-        console.log(response);
+        const response = await axiosInstance.post('game/next', { id: storyID });
+        newStoryID = response.data.id;
+
         setStory(response.data);
-        setStoryID(response.data.id);
+        setStoryID(newStoryID);
         setNeedSpin(response.data.needRoll);
-        if(response.data.needRoll !== 0){
-          setrollOrNext("Roll")
+
+        if (response.data.needRoll !== 0) {
+          setrollOrNext("Roll");
         }
-        //console.log(response.data.id)
+
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
-    }else{
-      setrollOrNext("Roll")
-      const spinned = spinWheel()
-      //console.log(storyID)
+    } else {
+      setrollOrNext("Roll");
+      const spinned = spinWheel();
+      console.log('Spinned Value:', spinned);
+
       try {
-        console.log(spinned)
-        const idstring = '66668392345bd12538db9c9b'
-        const response = await axiosInstance.get('game/next', {id: storyID, rollResult: spinned});
-        console.log(response)
+        const response = await axiosInstance.post('game/next', { id: storyID, rollResult: spinned });
+        newStoryID = response.data.id;
+
+        setStory(response.data);
+        setStoryID(newStoryID);
+        setNeedSpin(response.data.needRoll);
+        console.log(response);
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
     }
-  }
+  };
+
 
   useEffect(() => {
     const fetchStartData = async () => {
@@ -60,7 +66,8 @@ const Campaign = () => {
         setStory(response.data);
         setNeedSpin(response.data.needRoll);
         setStoryID(response.data.id);
-        console.log(response)
+        console.log('start')
+        console.log(storyID)
         // if(response.data.needRoll == 0){
         //   setrollOrNext("Next")
         // }else{
