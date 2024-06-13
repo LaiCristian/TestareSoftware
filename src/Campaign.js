@@ -83,8 +83,9 @@ const Campaign = () => {
       const names = storedCharacters.map(item => item.name);
       setStory(prevStory => ({
         ...prevStory,
-        text: replacePlaceholders(prevStory.text, names),
-        mainText: replacePlaceholders(prevStory.mainText, names)
+        mainText: replacePlaceholders(prevStory.mainText || '', names),
+        text: replacePlaceholders(prevStory.text || '', names),
+
       }));
       setPlaceholdersReplaced(true);
     }
