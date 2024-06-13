@@ -21,11 +21,35 @@ const Campaign = () => {
   const [rollOrNext, setrollOrNext] = useState('Next');
   const navigate = useNavigate();
 
-  const continueGame = () =>{
+  const continueGame = async () =>{
+    //console.log(needSpin)
     if(needSpin === 0){
-      
+      try {
+        const stoorr = '66668392345bd12538db9c9b'
+        const response = await axiosInstance.get('game/next', {id: stoorr});
+        console.log(response);
+        setStory(response.data);
+        setStoryID(response.data.id);
+        setNeedSpin(response.data.needRoll);
+        if(response.data.needRoll !== 0){
+          setrollOrNext("Roll")
+        }
+        //console.log(response.data.id)
+      } catch (error) {
+        console.log(error)
+      }
     }else{
       setrollOrNext("Roll")
+      const spinned = spinWheel()
+      //console.log(storyID)
+      try {
+        console.log(spinned)
+        const idstring = '66668392345bd12538db9c9b'
+        const response = await axiosInstance.get('game/next', {id: storyID, rollResult: spinned});
+        console.log(response)
+      } catch (error) {
+        console.log(error)
+      }
     }
   }
 
@@ -35,7 +59,8 @@ const Campaign = () => {
         const response = await axiosInstance.get('game/start', {});
         setStory(response.data);
         setNeedSpin(response.data.needRoll);
-        continueGame();
+        setStoryID(response.data.id);
+        console.log(response)
         // if(response.data.needRoll == 0){
         //   setrollOrNext("Next")
         // }else{
@@ -57,14 +82,14 @@ const Campaign = () => {
 
     const currentAngle = getComputedStyle(document.documentElement).getPropertyValue('--wheel_angle');
     const currentAngleValue = parseFloat(currentAngle);
-    console.log(currentAngle)
+    //console.log(currentAngle)
     const newAngle = 144-16.36 * newValue;
     document.documentElement.style.setProperty('--wheel_angle', `${currentAngleValue-360}deg`);
     
     setTimeout(()=>{
       document.documentElement.style.setProperty('--wheel_angle', `${newAngle}deg`);
     },500)
-    console.log(newValue+1)
+    return(newValue+1);
   }
 
   const addExitWind = () =>{
@@ -153,7 +178,7 @@ const Campaign = () => {
         <div className='TAngle'></div>
       </div>
       <div className='story'>
-        <div className='story_text'>{story.mainText ? story.mainText : ''}</div>
+        <div className='story_text'>{story.text ? story.text : story.mainText}</div>
         <div className='divinline'>
           <button className="button" id="option1" onClick={continueGame}>{rollOrNext}</button>
         </div>
@@ -167,7 +192,7 @@ const Campaign = () => {
         <div className='BAngle'></div>
         <div className='BAngle' id='ramaAng'></div>
         <div className='BRright' id='ramaBloc'>
-          <button className="button" id="spin" onClick={spinWheel}>Spin</button>
+          {/* <button className="button" id="spin" onClick={spinWheel}>Spin</button> */}
         </div>
       </div>
       <div className='roata_cont'>
