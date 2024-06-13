@@ -20,6 +20,7 @@ const Campaign = () => {
   const [storyID, setStoryID] = useState(null);
   const [rollOrNext, setrollOrNext] = useState('Next');
   const navigate = useNavigate();
+  const [placeholdersReplaced, setPlaceholdersReplaced] = useState(false);
 
   const continueGame = async () => {
     let newStoryID = 0;
@@ -29,6 +30,7 @@ const Campaign = () => {
         newStoryID = response.data.id;
 
         setStory(response.data);
+
         setStoryID(newStoryID);
         setNeedSpin(response.data.needRoll);
 
@@ -49,6 +51,8 @@ const Campaign = () => {
         newStoryID = response.data.id;
 
         setStory(response.data);
+        setTimeout(() => setStory({...response.data, text: response.data.mainText}), 2000);
+
         setStoryID(newStoryID);
         setNeedSpin(response.data.needRoll);
         console.log(response);
@@ -57,7 +61,34 @@ const Campaign = () => {
       }
     }
   };
+  function replacePlaceholders(inputString, namesArray) {
+    if (typeof inputString !== 'string') {
+      console.error('Invalid inputString:', inputString);
+      return '';
+    }
 
+    return inputString.replace(/\{\{(\d+)\}\}/g, (match, number) => {
+      const index = parseInt(number) - 1;
+
+      if (index >= 0 && index < namesArray.length) {
+        return namesArray[index];
+      } else {
+        return match;
+      }
+    });
+  }
+  useEffect(() => {
+    if (!placeholdersReplaced && (story.text || story.mainText)) {
+      const storedCharacters = JSON.parse(sessionStorage.getItem('characters'));
+      const names = storedCharacters.map(item => item.name);
+      setStory(prevStory => ({
+        ...prevStory,
+        text: replacePlaceholders(prevStory.text, names),
+        mainText: replacePlaceholders(prevStory.mainText, names)
+      }));
+      setPlaceholdersReplaced(true);
+    }
+  }, [story, placeholdersReplaced]);
 
   useEffect(() => {
     const fetchStartData = async () => {
@@ -66,8 +97,6 @@ const Campaign = () => {
         setStory(response.data);
         setNeedSpin(response.data.needRoll);
         setStoryID(response.data.id);
-        console.log('start')
-        console.log(storyID)
         // if(response.data.needRoll == 0){
         //   setrollOrNext("Next")
         // }else{
